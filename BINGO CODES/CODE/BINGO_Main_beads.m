@@ -5,7 +5,7 @@ clc;
 addpath(pwd);
 ori_path = pwd;
 addpath functions/;
-addpath algorithms/;
+addpath algorithm/;
 addpath(genpath(pwd));
 
 %% input data
@@ -219,7 +219,7 @@ h = msgbox('Start Unmixing......');
  tstart = tic;
  [W_BINGO,H_BINGO] = BINGO(V,num_fluo,spH);
  para.time_BINGO = toc(tstart);
-  [I_unmix_BINGO,fname_BINGO,tag_BINGO,para.SAD_BINGO,para.SID_BINGO,para.RMSE_BINGO,para.corr_BINGO,para.H_BINGO] = evluation(V,W_BINGO,H_BINGO,Hm,inimg,1);
+  [I_unmix_BINGO,fname_BINGO,tag_BINGO,para.SAD_BINGO,para.SID_BINGO,para.RMSE_BINGO,para.corr_BINGO,para.H_BINGO] = evluation(V,W_BINGO,H_BINGO,Hm,inimg,0);
   [para.SSIM_BINGO,para.CORR2_BINGO,para.hist_BINGO,para.Dice_BINGO,para.MIoU_BINGO] = similarity(I_unmix_BINGO,inimg);
 
  %nnmf
@@ -325,7 +325,7 @@ h1 = figure(3);
  ori_path=pwd;%remember current path
  file_path = file_path0;
  cd(file_path);%open file path
-  newfolder='Results';mkdir(newfolder) %creat fold
+  newfolder='Results2';mkdir(newfolder) %creat fold
    save_path=strcat(newfolder);
  cd(save_path);%open fold
 

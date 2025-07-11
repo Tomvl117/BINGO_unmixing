@@ -30,7 +30,7 @@ for n=1:r
         PT(:,j)=W((j-1)*pixel+1:pixel*j,n);
     end
     PT = PT/max(max(PT));
-    I_unmix{n}=uint8(round(PT*255));%将data转化至0-255之间
+    I_unmix{n}=uint8(round(PT*255));% Convert data to range 0-255
 end
 PT=zeros(pixel,pixel);
 for n=1:img_num
@@ -114,7 +114,7 @@ end
   SAD(i)=acos(H0(i,:)*H(i,:)'/(norm(H0(i,:),2)*norm(H(i,:),2)));
 
 
-%   计算光谱信息散度
+%   Calculate spectral information divergence
 
   for j = 1:r
       for l = 1:r
@@ -126,7 +126,7 @@ end
       SID(i) = Dab + Dba;
   end
 %   [SID(i),tag(i)] = min(SIDr(i,:));
- %记录精度 
+ % Recording accuracy
  switch tag(i)
     case 1
         name{i} = 'blue';
