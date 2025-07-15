@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.decomposition import NMF
 from sklearn.decomposition._nmf import _initialize_nmf
 
+
 class BINGONMF(NMF):
     def __init__(
         self,
@@ -16,8 +17,8 @@ class BINGONMF(NMF):
         super().__init__(
             n_components=n_components,
             init='nndsvd',
-            solver='mu',       # placeholder; we’ll ignore it
-            max_iter=1,        # disable built-in loop
+            solver='mu',  # Will be ignored
+            max_iter=1,  # Overruled by the PGD solver
             tol=tol,
             **kwargs
         )
@@ -37,7 +38,7 @@ class BINGONMF(NMF):
         W, H = _initialize_nmf(
             X,
             n_components=self.n_components,
-            init=self.init,
+            init=self.init,  # 'nndsvd'
             random_state=self.random_state,
         )
 

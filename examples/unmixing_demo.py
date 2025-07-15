@@ -1,10 +1,9 @@
 from src.bingo_unmixing.bingo_nmf import BINGONMF
-from sklearn.preprocessing import normalize
 import tifffile
 import numpy as np
 
 
-img = tifffile.imread(r"Z:\Rheenen\tvl_jr\normal Merged crop-1.tif")
+img = tifffile.imread(r"Z:\Rheenen\tvl_jr\normal Merged crop-2.tif")
 max_value = np.iinfo(img.dtype).max
 
 model = BINGONMF(
@@ -20,15 +19,14 @@ if img.ndim < 4:
     C = img.shape[0]
     X = img.reshape(C, -1).T
 # else: 3D application
-X = normalize(X)
+
+X = X.astype(float)/max_value
 
 W = model.fit_transform(X)
 H = model.components_
 
 output = W.T.reshape(img.shape)
-output_img = output.astype(img.dtype)
+output_img = (output*max_value).astype(img.dtype)
 
+tifffile.imwrite(r"Z:\Rheenen\tvl_jr\unmixed-float.tif", output)
 tifffile.imwrite(r"Z:\Rheenen\tvl_jr\unmixed.tif", output_img)
-
-# abundance_maps.shape == (10, 100, 100)
-# spectra.shape        == (10, 10)
