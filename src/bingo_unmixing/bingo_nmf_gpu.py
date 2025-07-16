@@ -1,4 +1,5 @@
 import torch
+from tqdm import tqdm
 from sklearn.decomposition import NMF
 from sklearn.decomposition._nmf import _initialize_nmf
 
@@ -30,18 +31,18 @@ class BINGONMF_GPU(NMF):
 
     # Define function required for the Projected Gradient Descent
     def _sparseness(self, H):
-        n = H.shape[0]  # By definition, the first dimension of H is the number of channels
+        n = torch.tensor(H.shape[0], dtype=torch.float32, device=self.device)  # By definition, the first dimension of H is the number of channels
         L1 = torch.sum(torch.abs(H))
         L2 = torch.norm(H)
-        return (torch.sqrt(torch.tensor(n, dtype=torch.float32, device=self.device)) - (L1 / L2)) / (torch.sqrt(torch.tensor(n, dtype=torch.float32, device=self.device)) - 1)
+        return (torch.sqrt(n) - (L1 / L2)) / (torch.sqrt(n) - 1)
 
     def _J1(self, H):
         return torch.abs(self._sparseness(H) - self.spH)
 
     # The new objective function incorporates a sparseness penalty
     def _objective(self, X, W, H):
-        frob = torch.norm(X - torch.matmul(W, H)) ** 2
-        return frob + self.alpha * self._J1(H)
+        norm_squared = torch.norm(X - torch.matmul(W, H)) ** 2
+        return norm_squared + self.alpha * self._J1(H)
 
     def _project_row(self, row):
         # Project a row to be non-negative, with unit L2 norm and target sparseness
@@ -52,8 +53,8 @@ class BINGONMF_GPU(NMF):
         row = row / norm  # L2 normalization
 
         # Adjust L1 norm to match target sparseness
-        n = row.shape[0]
-        desired_L1 = (torch.sqrt(torch.tensor(n, dtype=torch.float32, device=self.device)) - self.spH * (torch.sqrt(torch.tensor(n, dtype=torch.float32, device=self.device)) - 1)) * norm
+        n = torch.tensor(row, dtype=torch.float32, device=self.device)
+        desired_L1 = (torch.sqrt(n) - self.spH * (torch.sqrt(n) - 1)) * norm
         scale = desired_L1 / torch.sum(row)
         return row * scale
 
@@ -62,7 +63,7 @@ class BINGONMF_GPU(NMF):
 
     def _pgd_step(self, X, W, H):
         # Gradient descent update for H
-        H_new = H - self.step_size_h * torch.matmul(W.T, torch.matmul(W, H) - X)
+        H_new = H - self.step_size_h * torch.matmul(W.T, (torch.matmul(W, H) - X))
 
         # Projection step
         H_new = self._project_H(H_new)
@@ -92,7 +93,7 @@ class BINGONMF_GPU(NMF):
         H = torch.tensor(H_init, dtype=torch.float32, device=self.device)
 
         prev_err = None
-        for _ in range(self.custom_max_iter):
+        for _ in tqdm(range(self.custom_max_iter)):
             W, H = self._pgd_step(X_torch, W, H)
 
             # Calculate error
