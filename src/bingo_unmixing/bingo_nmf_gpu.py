@@ -53,7 +53,7 @@ class BINGONMF_GPU(NMF):
         row = row / norm  # L2 normalization
 
         # Adjust L1 norm to match target sparseness
-        n = torch.tensor(row, dtype=torch.float32, device=self.device)
+        n = torch.tensor(row.shape[0], dtype=torch.float32, device=self.device)
         desired_L1 = (torch.sqrt(n) - self.spH * (torch.sqrt(n) - 1)) * norm
         scale = desired_L1 / torch.sum(row)
         return row * scale
