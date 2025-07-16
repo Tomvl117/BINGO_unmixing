@@ -10,7 +10,6 @@ class BINGONMF(NMF):
         n_components: int,
         alpha=1e-1,
         spH=0.1,
-        step_size_w=1e-3,
         step_size_h=1e-3,
         max_iter=200,
         tol=1e-4,
@@ -26,7 +25,6 @@ class BINGONMF(NMF):
         )
         self.alpha = alpha
         self.spH = spH
-        self.step_size_w  = step_size_w
         self.step_size_h  = step_size_h
         self.custom_max_iter = max_iter
 

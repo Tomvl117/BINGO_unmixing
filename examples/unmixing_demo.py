@@ -10,7 +10,6 @@ model = BINGONMF(
     n_components=img.shape[0],
     alpha=1e-1,
     spH=0.3,
-    step_size_w=1e-3,
     step_size_h=1e-3,
     max_iter=300,
     random_state=0
