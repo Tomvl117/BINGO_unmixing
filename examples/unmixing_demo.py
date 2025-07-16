@@ -8,7 +8,8 @@ max_value = np.iinfo(img.dtype).max
 
 model = BINGONMF(
     n_components=img.shape[0],
-    alpha_h=1e-3,
+    alpha=1e-1,
+    spH=0.3,
     step_size_w=1e-3,
     step_size_h=1e-3,
     max_iter=300,
