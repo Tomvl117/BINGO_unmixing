@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 from sklearn.decomposition import NMF
 from sklearn.decomposition._nmf import _initialize_nmf
 
@@ -43,7 +44,7 @@ class BINGONMF(NMF):
         )
 
         prev_err = None
-        for n in range(self.custom_max_iter):
+        for n in tqdm(range(self.custom_max_iter)):
             # 3a. Update H with PGD (incl. L1 gradient)
             grad_H = W.T.dot(W.dot(H) - X) + self.alpha_h * np.sign(H)
             H -= self.step_size_h * grad_H
