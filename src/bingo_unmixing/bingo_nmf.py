@@ -111,7 +111,7 @@ class BINGONMF(NMF):
 
             # Calculate error
             err = sparse_constrain(X, W, H, self.alpha, self.spH)
-            if prev_err is not None and np.linalg.norm(err - prev_err) < self.tol:
+            if prev_err is not None and abs(err - prev_err) < self.tol:
                 break
             prev_err = err
 
