@@ -13,7 +13,6 @@ model = BINGONMF(
     spH=0.3,
     step_size_h=1e-3,
     max_iter=300,
-    random_state=0
 )
 
 model_gpu = BINGONMF_GPU(
@@ -22,7 +21,6 @@ model_gpu = BINGONMF_GPU(
     spH=0.3,
     step_size_h=1e-3,
     max_iter=300,
-    random_state=0
 )
 
 if img.ndim < 4:
@@ -53,5 +51,3 @@ output = W_gpu.T.reshape(img.shape)
 output_img = (output*max_value).astype(img.dtype)
 
 tifffile.imwrite(r"Z:\Rheenen\tvl_jr\unmixed_gpu.tif", output_img)
-
-

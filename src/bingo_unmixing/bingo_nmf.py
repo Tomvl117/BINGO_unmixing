@@ -40,7 +40,6 @@ class BINGONMF(NMF):
             X,
             n_components=self.n_components,
             init=self.init,  # 'nndsvd'
-            random_state=self.random_state,
         )
 
         # Define function required for the Projected Gradient Descent

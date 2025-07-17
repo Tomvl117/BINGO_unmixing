@@ -87,7 +87,6 @@ class BINGONMF_GPU(NMF):
             X,
             n_components=self.n_components,
             init=self.init,
-            random_state=self.random_state,
         )
         W = torch.tensor(W_init, dtype=torch.float32, device=self.device)
         H = torch.tensor(H_init, dtype=torch.float32, device=self.device)
