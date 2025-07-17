@@ -8,7 +8,6 @@ class BINGONMF_GPU(NMF):
         self,
         n_components: int,
         alpha=1e-1,
-        spH=0.1,
         step_size_h=1e-3,
         max_iter=200,
         tol=1e-4,
@@ -24,7 +23,7 @@ class BINGONMF_GPU(NMF):
             **kwargs
         )
         self.alpha = alpha
-        self.spH = spH
+        self.spH = 1  # Changing this parameter causes instability in the GPU pipeline
         self.step_size_h = step_size_h
         self.custom_max_iter = max_iter
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")

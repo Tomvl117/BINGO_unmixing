@@ -10,7 +10,7 @@ max_value = np.iinfo(img.dtype).max
 model = BINGONMF(
     n_components=img.shape[0],
     alpha=1e-1,
-    spH=0.3,
+    spH=0.5,
     step_size_h=1e-3,
     max_iter=300,
 )
@@ -18,7 +18,6 @@ model = BINGONMF(
 model_gpu = BINGONMF_GPU(
     n_components=img.shape[0],
     alpha=1e-1,
-    spH=0.3,
     step_size_h=1e-3,
     max_iter=300,
 )
