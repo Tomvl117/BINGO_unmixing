@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bingo-unmixing"
-version = "0.0.1"
+version = "0.1.0"
 description = "BINGO: Blind unmixing via SVD-based Initialization Nmf with project Gradient descent and spare cOnstrain."
 readme = "README.md"
 authors = [{name = "Tom van Leeuwen", email = "tom@tleeuwen.nl"}]
@@ -26,7 +26,7 @@ line-length = 88
 target-version = ['py39', 'py310', 'py311', 'py312', 'py313']
 
 [tool.bumpver]
-current_version = "0.0.1"
+current_version = "0.1.0"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 tag_message = "{new_version}"
