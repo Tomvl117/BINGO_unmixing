@@ -1,2 +1,3 @@
 *.pyc
 .idea/
+src/bingo_unmixing.egg-info/
