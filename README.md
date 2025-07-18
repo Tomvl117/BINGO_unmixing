@@ -1,9 +1,34 @@
-# BINGO_unmixing
-	Minimum requirements of the code
-	To run this code, MATLAB(Mathworks) should be installed. In addition, MATLAB Image Processing Toolbox is required to run unmixing code.
-	We have tested the code with MATLAB R2021a running on Windows 10
-#	Demo image
-1. A demo input image is in the ‘DEMO/BEADS/raw’ folder.
-2. The demo input image was required by Zeiss LSM 780, which equipped with Mai Tai HP (690nm-850nm) laser, W Plan-Apochromat 20×/1.0w objective, and 32-array GaAsP detector. The spectral imaging was set to 16 channels with a bandwidth of 17.9 nm per unit and a detec-tion range of 410-695 nm. 
-3. 15-μm diameter polystyrene fluorescent beads（F8837 Blue，F8838 Blue-green, F21010 Geen, F8844 Yellow-green, F21011 Yellow, F8841 Orange, F21012 Red-orange, F8842 Red, F8839, Crimson, F8843 Scarlet, Thermo Fisher, Scientific）were embedded in confocal imaging dishes with agarose.
-4. Simply running the code (‘BINGO_Main_beads.m’) will genetate unmixed images, in the ‘DEMO/BEADS/Results’ folder.
+# BINGO unmixing.
+
+## About this repo
+A Python implementation of the BINGO blind unmixing algorithm.
+
+## Installation
+### Notes
+This setup has so far only been verified on Windows-based, CUDA-accelerated machines. Testing has only been performed on
+    CUDA 12.6. There are no reasons why 11.x should not work (check instructions), but your mileage may vary.
+### Conda setup
+```bash
+conda create -n bingo-unmixing python=3.13
+conda activate bingo-unmixing
+```
+### Local install
+Clone the repository, then within the `bingo-unmixing` environment, navigate to the repository directory.
+```bash
+pip install -e .
+pip install scikit-learn tifffile tqdm
+```
+### GPU acceleration
+To use GPU-accelerated code, see the installation instructions on the [PyTorch webpages](https://pytorch.org/get-started/locally/). Run the following command, where
+you may need to change the version number to the appropriate CUDA version on your system.
+```bash
+pip uninstall torch
+pip install torch --index-url https://download.pytorch.org/whl/cu126
+```
+## Instructions
+### Example code
+See `examples/`.
+
+## References
+Xinyuan Huang, Xiujuan Gao, & Ling Fu. (2024) BINGO: a blind unmixing algorithm for ultra-multiplexing fluorescence images.
+	Bioinformatics, Volume 40, Issue 2, February 2024, btae052, [10.1093/bioinformatics/btae052](https://doi.org/10.1093/bioinformatics/btae052)
