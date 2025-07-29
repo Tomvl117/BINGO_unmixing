@@ -117,6 +117,22 @@ class BINGONMF(NMF):
         self.components_ = H
         return W
 
-    def fit_transform(self, X, y=None, **fit_params):
+    def fit_transform(self, X: np.ndarray, y=None, reshape=True, **fit_params):
+        # Takes an array and preprocesses it to a workable format. Also retransforms to a usable output if reshape=True.
+        dtype = X.dtype
+        shape = X.shape
+        max_value = np.iinfo(dtype).max
+
+        if X.ndim < 4:
+            C = X.shape[0]
+            X = X.reshape(C, -1).T
+        # else: 3D application
+
+        X = X.astype(float) / max_value
         W = self._fit(X, **fit_params)
+
+        if reshape:
+            W = W.T.reshape(shape)
+            W = (W * max_value).astype(dtype)
+
         return W
