@@ -8,9 +8,9 @@ class BINGONMF(NMF):
     def __init__(
         self,
         n_components: int,
-        alpha=1e-1,
-        spH=0.1,
-        step_size_h=1e-3,
+        alpha=0.07,  # Parameter found by Bayesian optimization: 0.0700581314965608
+        spH=0.144,  # Parameter found by Bayesian optimization: 0.14396621653699432
+        step_size_h=2.767e-05,  # Parameter found by Bayesian optimization: 2.7667258298502698e-05
         max_iter=200,
         tol=1e-4,
         **kwargs
