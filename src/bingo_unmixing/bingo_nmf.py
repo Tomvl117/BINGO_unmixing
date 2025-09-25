@@ -89,22 +89,25 @@ class BINGONMF(NMF):
 
         prev_err = None
         for n in tqdm(range(self.custom_max_iter)):
-            # Input: Wk and Hk
-            # Output: Wk+1 and Hk+1
+            """
+            Input: Wk and Hk
+            Output: Wk+1 and Hk+1
 
-            # 1 Set: H := H - µ W.T (W H - V)
+            1 Set: H := H - µ W.T (W H - V)
 
-            # 2 Project each row of H to be non-negative, have unit L2 norm, and L1 norm set to achieve desired
-            # sparseness
+            2 Project each row of H to be non-negative, have unit L2 norm, and L1 norm set to achieve desired
+            sparseness
 
-            # 3 W := W * (V H.T) / (W H H.T)
+            3 W := W * (V H.T) / (W H H.T)
 
-            # Sparseness is calculated as:
-            # f(W, H) = ||X - WH||2,F + alpha J1(H),
-            # where F is the L2 norm, alpha is an empirical value, J1(H) = |sparseness(H) - spH),
-            # in which spH is an adjustable parameter between 0-1, sparseness(H) = (sqrt(n) - L1 / L2) / (sqrt(n) - 1),
-            # where L1 = summation(Hi)n,i=1 and L2 = sqrt(summation((Hi)^2)n,i=1),
-            # in which n is the number of detection channels
+            Sparseness is calculated as:
+            f(W, H) = ||X - WH||2,F + alpha * J1(H),
+                where F is the L2 norm, alpha is an empirical value, J1(H) = |sparseness(H) - spH|,
+                    in which spH is an adjustable parameter between 0-1,
+                    sparseness(H) = (sqrt(n) - L1 / L2) / (sqrt(n) - 1),
+                        where L1 = summation(Hi)n,i=1 and L2 = sqrt(summation((Hi)^2)n,i=1),
+                            in which n is the number of detection channels
+            """
 
             W, H = pgd_step(X, W, H, self.step_size_h, self.spH)
 
